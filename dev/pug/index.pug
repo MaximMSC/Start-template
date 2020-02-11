@@ -1,20 +1,30 @@
-include mixins/mixins
+include utils/mixins
+
+block variables
 
 doctype html
 html(lang="ru-RU")
 	head
 		meta(charset="utf-8")
-		title #{title}
+		title Surf
 		<!--[if IE]>
 		meta(http-equiv='X-UA-Compatible', content="IE = edge")
 		<![endif]-->
 		meta(name="viewport" content="width=device-width,initial-scale=1")
 		meta(name="keywords" content="")
 		link(rel="stylesheet" type='text/css' href="static/css/styles.min.css")
+		link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css")
 		<!--[if lt IE 9]>
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js")
 		<![endif]-->
+		link(href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,800&display=swap" rel="stylesheet")
 	body(class=pageClass)
 		.wrapper
-			.content
+			include modules/header/header
+			block content
+			include modules/footer/footer
+		script(src="https://code.jquery.com/jquery-3.4.1.min.js")
+		script(src="static/js/libs.min.js")
+		script(src="static/js/main.js")
+		script(src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js")
 		block script

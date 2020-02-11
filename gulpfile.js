@@ -9,7 +9,7 @@ const autoprefixer = require('gulp-autoprefixer'),
     cached = require('gulp-cached'),
     concat = require('gulp-concat'),
     del = require('del'),
-    filter = require('gulp-filter');
+    filter = require('gulp-filter'),
     gulp = require('gulp'),
     gulpif = require('gulp-if'),
     imagemin = require('gulp-imagemin'),
@@ -24,16 +24,15 @@ const autoprefixer = require('gulp-autoprefixer'),
 	svgmin = require('gulp-svgmin'),
     uglify = require('gulp-uglify');
     
-
 gulp.task('pug', function(){
-    return gulp.src('./dev/pug/**/*.pug')
+    return gulp.src('./dev/pug/*.pug')
     .pipe(plumber())
     .pipe(pug({
         pretty: true
     }))
     .pipe(plumber.stop())
     .pipe(cached('pug'))
-    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./build/'))
     .on('end', browserSync.reload);
 });
 
@@ -72,13 +71,13 @@ gulp.task('scss:build-min', function (){
 });
 
 gulp.task('libsJS:dev', function (){
-    return gulp.src(['node_modules/svg4everybody/dist/svg4everybody.min.js'])
+    return gulp.src(['node_modules/svg4everybody/dist/svg4everybody.min.js','node_modules/wow.js/dist/wow.min.js'])
     .pipe(concat('libs.min.js'))
     .pipe(gulp.dest('./build/static/js/'))
 })
 
 gulp.task('libsJS:build', function (){
-    return gulp.src(['node_modules/svg4everybody/dist/svg4everybody.min.js'])
+    return gulp.src(['node_modules/svg4everybody/dist/svg4everybody.min.js','node_modules/wow.js/dist/wow.min.js'])
     .pipe(concat('libs.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./build/static/js/'))
@@ -99,7 +98,6 @@ gulp.task('img:dev', function (){
     .pipe(gulp.dest('./build/static/images/'))
 });
 
-
 gulp.task('img:build', function (){
     return gulp.src(["./dev/static/images/**/*.{png,jpg,gif,svg}",
     '!./dev/static/images/svg/*'])
@@ -111,7 +109,7 @@ gulp.task('img:build', function (){
         imagemin.optipng(),
         imagemin.svgo()
     ])))
-    .pipe(gulp.dest('./build/static/images/'))
+    .pipe(gulp.dest('./build/images'))
 });
 
 gulp.task('browser-sync', function() {
@@ -133,6 +131,7 @@ gulp.task('svg', function(){
     .pipe(cheerio({
         run: function ($) {
             $('[fill]').removeAttr('fill');
+            $('[stroke]').removeAttr('stroke');
             $('[style]').removeAttr('style');
         },
         parserOptions: { xmlMode: true }
@@ -161,10 +160,10 @@ gulp.task('clean', function (){
 })
 
 gulp.task('watch', function(){
-    gulp.watch('./dev/pug/**/*.pug', gulp.series('pug'))
+    gulp.watch('./dev/pug/**/*.pug', gulp.series('pug'));
     gulp.watch('./dev/static/styles/**/*.scss', gulp.series('scss:dev'));
-    gulp.watch(['./dev/static/images/general/**/*.{png,jpg,gif,svg}',
-            './dev/static/images/content/**/*.{png,jpg,gif,svg}'], gulp.series('img:dev'));
+    gulp.watch(['./dev/static/images/general/**/*.{png,jpg,gif}',
+            './dev/static/images/content/**/*.{png,jpg,gif}'], gulp.series('img:dev'));
     gulp.watch('./dev/static/images/svg/*.svg', gulp.series('svg'));
     gulp.watch('./dev/static/js/**/*.js', gulp.series('js:dev'));
 });
@@ -184,8 +183,6 @@ gulp.task('build', gulp.series(
         'svg'
     )
 ));
-
-
 
 gulp.task('default', gulp.series(
     'dev',

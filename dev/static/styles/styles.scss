@@ -1,17 +1,17 @@
 @import "utils/libs";
 @import "utils/vars";
 @import "utils/mixins";
+@import "modules/header";
+@import "modules/footer";
+@import "small-blocks/small-blocks";
+
 
 html {
   font-size: $base-font-size;
-  height: 100%;
 }
 
 body {
-  min-height: 100vh;
-  scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
+  min-width: 320px;
 }
 
 *,
@@ -30,7 +30,6 @@ h2,
 h3,
 h4,
 p,
-ul[class],
 ol[class],
 li,
 figure,
@@ -78,8 +77,6 @@ select,
 button { outline: none; }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
@@ -88,10 +85,11 @@ button { outline: none; }
 .container {
   margin: 0 auto;
   max-width: $content-size;
-  width: 100%;
 }
 
 a{
-    color: red;
-    font-size: rem(24px);
+    color: $white;
+    outline: none;
+    text-decoration: none;
+    // font-size: rem(24px);
 }

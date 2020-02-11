@@ -34,9 +34,11 @@
     "gulp-uglify": "^3.0.2"
   },
   "dependencies": {
+    "animate.css": "^3.7.2",
     "imagemin-mozjpeg": "^8.0.0",
     "normalize.css": "^8.0.1",
     "slick-carousel": "^1.8.1",
-    "svg4everybody": "^2.1.9"
+    "svg4everybody": "^2.1.9",
+    "wow.js": "^1.2.2"
   }
 }
